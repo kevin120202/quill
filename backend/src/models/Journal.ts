@@ -9,7 +9,7 @@ export type JournalType = {
 }
 
 const journalSchema = new mongoose.Schema({
-    userId: { type: String, required: true },
+    // userId: { type: String, required: true },
     title: { type: String, required: true },
     journalType: {
         type: String,
@@ -17,7 +17,7 @@ const journalSchema = new mongoose.Schema({
         required: true
     },
     entry: { type: String, required: true }
-})
+}, { timestamps: true })
 
 const Journal = mongoose.model<JournalType>("Journal", journalSchema)
 
