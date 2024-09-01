@@ -3,10 +3,11 @@ import cors from "cors"
 import "dotenv/config"
 import mongoose from "mongoose"
 import cookieParser from "cookie-parser"
+import { errorHandler } from "./middleware/errorHandler"
 
 // Routes
 import journalRoutes from "./routes/journal"
-import { errorHandler } from "./middleware/errorHandler"
+import authRoutes from "./routes/auth"
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string)
 
@@ -17,6 +18,7 @@ app.use(cors({ credentials: true }))
 app.use(cookieParser())
 
 app.use("/api/journals", journalRoutes)
+app.use("/api/auth", authRoutes)
 
 app.use(errorHandler)
 

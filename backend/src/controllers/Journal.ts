@@ -49,6 +49,8 @@ export const getSingleJournal = asyncHandler(async (req: Request, res: Response)
         throw new Error("Journal not found")
     }
 
+
+
     res.status(200).json({ journal })
 })
 
