@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import asyncHandler from "express-async-handler"
 import Journal from "../models/journal"
+import mongoose from "mongoose"
 
 // @desc    Fetch all journals
 // @route   GET /api/journals
@@ -29,6 +30,11 @@ export const createJournal = asyncHandler(async (req: Request, res: Response) =>
 // @route   PUT /api/journals/:id
 // @access  Private
 export const updateJournal = async (req: Request, res: Response) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        res.status(404)
+        throw new Error("Invalid ID")
+    }
+
     const journal = await Journal.findById(req.params.id)
     if (!journal) {
         res.status(404)
@@ -43,13 +49,16 @@ export const updateJournal = async (req: Request, res: Response) => {
 // @route   GET /api/journals/:id
 // @access  Private
 export const getSingleJournal = asyncHandler(async (req: Request, res: Response) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        res.status(404)
+        throw new Error("Invalid ID")
+    }
+
     const journal = await Journal.findById(req.params.id)
     if (!journal) {
         res.status(404)
         throw new Error("Journal not found")
     }
-
-
 
     res.status(200).json({ journal })
 })
@@ -58,6 +67,11 @@ export const getSingleJournal = asyncHandler(async (req: Request, res: Response)
 // @route   DELETE /api/journals/:id
 // @access  Private
 export const deleteJournal = asyncHandler(async (req: Request, res: Response) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        res.status(404)
+        throw new Error("Invalid ID")
+    }
+
     const journal = await Journal.findById(req.params.id)
     if (!journal) {
         res.status(404)
